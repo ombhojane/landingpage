@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
 import logo from './assets/logo.png';
 import banner from './assets/banner.png';
 import { signInWithGoogle } from "./Firebase";
 
 function App() {
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        setLatitude(latitude);
+        setLongitude(longitude);
+      }, error => {
+        // Handle geolocation error
+        console.log(error);
+      });
+    } else {
+      // Geolocation is not supported by the browser
+      // Handle the error or show an appropriate message
+      console.log("Geolocation is not supported");
+    }
+  }, []);
+
   return (
     <>
       <div className="navbar">
@@ -14,7 +34,7 @@ function App() {
           </li>
         </ul>
         <div className="buttons">
-        <button class="login-button" onClick={signInWithGoogle}>LOG IN</button>
+          <button className="login-button" onClick={signInWithGoogle}>LOG IN</button>
           <button className="signup-button" onClick={signInWithGoogle}>SIGN IN</button>
         </div>
       </div>
@@ -24,9 +44,8 @@ function App() {
           <div className="header-text">
             <h2>
               <span className="get">Get Awareness Through</span>
-              </h2>
-              
-              <h1>
+            </h2>
+            <h1>
               <span className="title">Wellness.ai</span>
             </h1>
             <br />
@@ -43,6 +62,16 @@ function App() {
           </div>
         </div>
       </div>
+
+      {/* <div className="geolocation-info">
+        {latitude && longitude ? (
+          <p>
+            Latitude: {latitude.toFixed(6)}, Longitude: {longitude.toFixed(6)}
+          </p>
+        ) : (
+          <p>Fetching geolocation...</p>
+        )}
+      </div> */}
     </>
   );
 }
