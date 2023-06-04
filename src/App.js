@@ -14,6 +14,7 @@ function App() {
           </li>
         </ul>
         <div className="buttons">
+        <button class="login-button" onClick={signInWithGoogle}>LOG IN</button>
           <button className="signup-button" onClick={signInWithGoogle}>SIGN IN</button>
         </div>
       </div>
@@ -29,7 +30,7 @@ function App() {
               <span className="title">Wellness.ai</span>
             </h1>
             <br />
-            <button className="header-button">Get Started</button>
+            <button className="header-button" onClick={signInWithGoogle}>Get Started</button>
             <p className="tagline">
               "Embrace Your Mind, Empower Your Life:
               <br />
